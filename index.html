@@ -2,12 +2,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formatter</title>
   <!-- Обновленные, надежные версии библиотек -->
   <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://unpkg.com/mammoth@1.12.3/mammoth.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <style>
+    
     /* Анимированный плавающий градиент на фоне */
     body { 
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
@@ -140,6 +142,21 @@
 
     .success-msg { color: #16a34a !important; font-size: 18px !important; }
     .error-msg { color: #dc2626 !important; }
+
+        @media (max-width: 600px) {
+    body {
+        padding: 16px;
+    }
+    .container {
+        padding: 24px 16px;
+        border-radius: 18px;
+    }
+    .custom-file-upload {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+    }
   </style>
 </head>
 <body>
