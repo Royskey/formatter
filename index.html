@@ -13,9 +13,7 @@
   
   <style>
     /* Базовые настройки */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -36,7 +34,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Кнопка "Назад" */
     .top-left-link {
       position: absolute;
       top: 24px;
@@ -63,7 +60,6 @@
       background: #ffffff;
     }
 
-    /* Основной контейнер (Идеальное центрирование) */
     .container {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
@@ -73,7 +69,8 @@
       max-width: 550px;
       width: 100%;
       text-align: center;
-      margin: auto; /* Центрирует блок и по вертикали, и по горизонтали */
+      margin: auto;
+      transition: transform 0.3s ease;
     }
 
     h2 {
@@ -83,7 +80,6 @@
       margin-bottom: 20px;
     }
 
-    /* Блок с предупреждением */
     .warning-box {
       background: #fffbeb;
       border-left: 4px solid #f59e0b;
@@ -103,9 +99,7 @@
       transition: color 0.3s ease;
     }
 
-    .warning-box a:hover {
-      color: #4338ca;
-    }
+    .warning-box a:hover { color: #4338ca; }
 
     .features-details {
       background: #f8fafc;
@@ -137,9 +131,7 @@
       outline: none;
     }
 
-    .features-summary::-webkit-details-marker {
-      display: none;
-    }
+    .features-summary::-webkit-details-marker { display: none; }
 
     .features-summary::after {
       content: '›';
@@ -149,11 +141,8 @@
       color: #94a3b8;
     }
 
-    .features-details.is-open .features-summary::after {
-      transform: rotate(90deg);
-    }
+    .features-details.is-open .features-summary::after { transform: rotate(90deg); }
 
-    /* Плавный контейнер контента */
     .features-content {
       max-height: 0;
       overflow: hidden;
@@ -171,14 +160,9 @@
       padding-left: 20px;
     }
 
-    .features-inner li {
-      margin-bottom: 6px;
-    }
+    .features-inner li { margin-bottom: 6px; }
+    .features-inner li:last-child { margin-bottom: 0; }
 
-    .features-inner li:last-child {
-      margin-bottom: 0;
-    }
-    /* Поле выбора файла */
     .custom-file-upload {
       display: inline-block;
       padding: 16px 32px;
@@ -206,7 +190,6 @@
       word-break: break-all;
     }
 
-    /* Название исходящего файла */
     .file-name-group {
       display: none;
       text-align: left;
@@ -238,7 +221,6 @@
       box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
     }
 
-    /* Кнопки действий */
     .btn-primary, .btn-settings {
       border: none;
       padding: 14px 32px;
@@ -281,7 +263,6 @@
       color: #1e293b;
     }
 
-    /* Панель расширенных настроек */
     .settings-panel {
       max-height: 0;
       overflow: hidden;
@@ -312,9 +293,7 @@
       gap: 15px;
     }
 
-    .setting-item:last-child {
-      margin-bottom: 0;
-    }
+    .setting-item:last-child { margin-bottom: 0; }
 
     .setting-select {
       padding: 6px 10px;
@@ -325,20 +304,15 @@
       outline: none;
     }
 
-    /* Переключатели (Тумблеры) */
     .switch {
       position: relative;
       display: inline-block;
       width: 44px;
       height: 24px;
-      flex-shrink: 0; /* Защита от сплющивания на смартфонах */
+      flex-shrink: 0;
     }
 
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+    .switch input { opacity: 0; width: 0; height: 0; }
 
     .slider {
       position: absolute;
@@ -361,15 +335,9 @@
       border-radius: 50%;
     }
 
-    input:checked + .slider {
-      background-color: #10b981;
-    }
+    input:checked + .slider { background-color: #10b981; }
+    input:checked + .slider:before { transform: translateX(20px); }
 
-    input:checked + .slider:before {
-      transform: translateX(20px);
-    }
-
-    /* Загрузчик и статусы */
     .loader-wrapper {
       display: none;
       flex-direction: column;
@@ -387,26 +355,25 @@
       margin-bottom: 15px;
     }
 
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 
     #status {
       font-weight: 600;
       color: #475569;
       font-size: 15px;
+      text-align: center;
     }
 
     .success-msg { color: #16a34a !important; font-size: 18px !important; }
     .error-msg { color: #dc2626 !important; }
 
-    /* Подвал */
     footer {
       text-align: center;
       font-size: 13px;
       color: rgba(255, 255, 255, 0.6);
       letter-spacing: 0.5px;
       padding: 15px 0 5px 0;
+      margin-top: 20px;
     }
 
     footer span {
@@ -414,12 +381,8 @@
       font-weight: 600;
     }
 
-    /* Адаптивность под мобильные устройства */
     @media (max-width: 600px) {
-      body {
-        padding-top: 75px; /* Освобождаем место для кнопки "Назад", чтобы она не перекрывала контейнер */
-      }
-
+      body { padding-top: 75px; }
       .top-left-link {
         top: 16px;
         left: 16px;
@@ -427,27 +390,20 @@
         font-size: 13px;
         border-radius: 10px;
       }
-
       .container {
         padding: 24px 20px;
         border-radius: 18px;
       }
-
-      h2 {
-        font-size: 22px;
-      }
-
+      h2 { font-size: 22px; }
       .custom-file-upload {
         width: 100%;
         padding: 14px 16px;
         font-size: 14px;
       }
-
       .btn-primary, .btn-settings {
         padding: 12px;
         font-size: 15px;
       }
-
       .setting-item {
         font-size: 13px;
         gap: 12px;
@@ -461,31 +417,30 @@
     🔗 Services
   </a>
   
-  <div class="container">
+  <div class="container" id="mainContainer">
     <h2>Formatter</h2>
     
-    <div class="warning-box">Документ автоматически форматируется согласно <a href="https://bi.nsuem.ru/upload/iblock/d60/%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%20%D0%BE%D0%B1%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F.pdf" target="_blank" style="color: #4f46e5; text-decoration: none; border-bottom: 1px dashed #4f46e5;">официальным правилам оформления НГУЭУ</a>.
-  </div>
-
-  <details class="features-details" id="featuresDetails">
-    <summary class="features-summary">
-      💡 Что умеет этот сервис?
-    </summary>
-    <div class="features-content" id="featuresContent">
-      <div class="features-inner">
-        <ul>
-          <li><strong>ГОСТ-стандарты полей:</strong> левое 30 мм, правое 10 мм, верх/низ по 20 мм.</li>
-          <li><strong>Типографика:</strong> единый шрифт Times New Roman (14 pt для текста, 1.5 интервал, абзацный отступ 1.25 см).</li>
-          <li><strong>Структура и разделы:</strong> центрирование ключевых блоков (Введение, Заключение, Список источников, ТЗ) и сквозная нумерация глав.</li>
-          <li><strong>Умные таблицы:</strong> автонумерация «Таблица N», границы по ГОСТу и выбор размера шрифта ячеек (10 или 12 pt).</li>
-          <li><strong>Форматы:</strong> чтение <code>.docx</code> и <code>.txt</code> (включая markdown-таблицы с <code>|</code>).</li>
-          <li><strong>Нумерация:</strong> сквозные номера страниц снизу по центру с отключением на титульнике.</li>
-        </ul>
-      </div>
+    <div class="warning-box">
+      Документ автоматически форматируется согласно <a href="https://bi.nsuem.ru/upload/iblock/d60/%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%20%D0%BE%D0%B1%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F.pdf" target="_blank">официальным правилам оформления НГУЭУ</a>.
     </div>
-  </details>
 
-    <!-- Улучшение: поддержка обычных текстовых файлов -->
+    <details class="features-details" id="featuresDetails">
+      <summary class="features-summary">
+        💡 Что умеет этот сервис?
+      </summary>
+      <div class="features-content" id="featuresContent">
+        <div class="features-inner">
+          <ul>
+            <li><strong>ГОСТ-стандарты полей:</strong> левое 30 мм, правое 10 мм, верх/низ по 20 мм.</li>
+            <li><strong>Типографика:</strong> единый шрифт Times New Roman (14 pt для текста, 1.5 интервал, абзацный отступ 1.25 см).</li>
+            <li><strong>Структура и разделы:</strong> центрирование ключевых блоков (Введение, Заключение и др.) и сквозная нумерация.</li>
+            <li><strong>Умные таблицы:</strong> автонумерация, границы по ГОСТу и выбор размера шрифта ячеек.</li>
+            <li><strong>Поддержка файлов:</strong> чтение <code>.docx</code> и безопасное чтение <code>.txt</code> (включая markdown-таблицы).</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
     <label for="fileInput" class="custom-file-upload">
       📁 Выбрать файл (.docx, .txt)
     </label>
@@ -539,9 +494,7 @@
     </div>
   </div>
 
-  <footer style="margin-top: 40px; text-align: center; font-size: 13px; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.5px;">
-    made with 💜 by <span style="color: rgba(255, 255, 255, 0.7); font-weight: 600;">me</span>
-  </footer>
+  <footer>made with 💜 by <span>me</span></footer>
 
   <script>
     const fileInput = document.getElementById('fileInput');
@@ -549,13 +502,12 @@
     const statusDiv = document.getElementById('status');
     const fileNameDiv = document.getElementById('fileName');
     const loader = document.getElementById('loader');
-    
     const fileNameGroup = document.getElementById('fileNameGroup');
     const outFileNameInput = document.getElementById('outFileName');
-    
     const toggleSettingsBtn = document.getElementById('toggleSettings');
     const settingsPanel = document.getElementById('settingsPanel');
-    
+    const spinner = document.querySelector('.spinner');
+
     toggleSettingsBtn.addEventListener('click', () => {
       settingsPanel.classList.toggle('open');
     });
@@ -577,14 +529,22 @@
       }
     });
 
+    // Настоящий Drag & Drop файлов
     window.addEventListener('dragover', (e) => e.preventDefault());
-    window.addEventListener('drop', (e) => e.preventDefault());
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+      }
+    });
 
     processBtn.addEventListener('click', async () => {
       processBtn.style.display = 'none';
       toggleSettingsBtn.style.display = 'none';
       settingsPanel.classList.remove('open');
       loader.style.display = 'flex';
+      spinner.style.display = 'block';
       statusDiv.className = '';
       
       setTimeout(() => statusDiv.innerText = "Чтение файла...", 500);
@@ -593,15 +553,20 @@
       setTimeout(() => statusDiv.innerText = "Внедрение метаданных и сохранение...", 3200);
 
       try {
-        await new Promise(resolve => setTimeout(resolve, 3500));
+        await new Promise(resolve => setTimeout(resolve, 3500)); // Оставляем для красивого UI, как просили
         
         const reader = new FileReader();
+        
+        reader.onerror = () => {
+          throw new Error("Ошибка чтения файла операционной системой.");
+        };
+
         reader.onload = async function(event) {
           try {
             const arrayBuffer = event.target.result;
             let resultHtml = "";
             
-            // ВЕРНУЛИ БЛОК ДЛЯ DOCX ФАЙЛОВ
+            // Защита и чтение .txt файлов
             if (uploadedFile.name.toLowerCase().endsWith('.txt')) {
                 let text = "";
                 try {
@@ -609,35 +574,28 @@
                 } catch (e) {
                     text = new TextDecoder('windows-1251').decode(arrayBuffer);
                 }
-                resultHtml = text.split(/\r?\n/).map(line => `<p>${line}</p>`).join('');
+                const escapeHtml = str => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                resultHtml = text.split(/\r?\n/).map(line => `<p>${escapeHtml(line)}</p>`).join('');
             } else {
-                try {
-                  const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-                  resultHtml = result.value;
-                } catch (mammothError) {
-                  throw new Error("Ошибка при чтении файла. Детали: " + mammothError.message);
-                }
+                // Чтение .docx через mammoth
+                const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+                resultHtml = result.value;
             }
             
-            try {
-              await generateGostDoc(resultHtml);
-            } catch (docxError) {
-              throw new Error("Ошибка при формировании документа. Детали: " + docxError.message);
-            }
+            await generateGostDoc(resultHtml);
             
-            document.querySelector('.spinner').style.display = 'none';
+            spinner.style.display = 'none';
             statusDiv.className = 'success-msg';
             statusDiv.innerText = "✨ Документ успешно отформатирован!";
             
             setTimeout(() => {
               processBtn.style.display = 'block';
               toggleSettingsBtn.style.display = 'block';
-              document.querySelector('.spinner').style.display = 'block';
               loader.style.display = 'none';
             }, 3000);
 
           } catch (error) {
-            document.querySelector('.spinner').style.display = 'none';
+            spinner.style.display = 'none';
             statusDiv.className = 'error-msg';
             statusDiv.innerText = error.message;
             processBtn.style.display = 'block';
@@ -647,7 +605,12 @@
         };
         reader.readAsArrayBuffer(uploadedFile);
       } catch (error) {
-         console.error(error);
+        spinner.style.display = 'none';
+        statusDiv.className = 'error-msg';
+        statusDiv.innerText = error.message;
+        processBtn.style.display = 'block';
+        toggleSettingsBtn.style.display = 'block';
+        console.error(error);
       }
     });
 
@@ -656,8 +619,7 @@
     const featSummary = featDetails.querySelector('.features-summary');
 
     featSummary.addEventListener('click', (e) => {
-      e.preventDefault(); // Предотвращаем мгновенное скрытие браузером
-
+      e.preventDefault();
       if (!featDetails.classList.contains('is-open')) {
         featDetails.setAttribute('open', '');
         featDetails.classList.add('is-open');
@@ -666,32 +628,34 @@
         featDetails.classList.remove('is-open');
         featContent.style.maxHeight = '0px';
         setTimeout(() => {
-          if (!featDetails.classList.contains('is-open')) {
-            featDetails.removeAttribute('open');
-          }
-        }, 350); // Ждём завершения CSS-анимации
+          if (!featDetails.classList.contains('is-open')) featDetails.removeAttribute('open');
+        }, 350);
       }
     });
 
-    // Улучшенный extractRuns с защитой от пропажи текста
-    function extractRuns(domNode, baseOptions = {}) {
-      const runs = [];
+    // Рекурсивный обход узлов — решает проблему стилей при <br> и переносах строк
+    function extractLines(domNode, baseOptions = {}) {
+      const lines = [[]];
       function walk(node, currentOpts) {
         if (node.nodeType === Node.TEXT_NODE) {
           const val = node.nodeValue;
           if (val) {
-            runs.push(new docx.TextRun({
+            lines[lines.length - 1].push({
               text: val,
               font: 'Times New Roman',
               color: '000000',
               size: currentOpts.size || 28,
               bold: Boolean(currentOpts.bold),
               italics: Boolean(currentOpts.italics)
-            }));
+            });
           }
         } else if (node.nodeType === Node.ELEMENT_NODE) {
-          const nextOpts = { ...currentOpts };
           const tag = node.nodeName.toUpperCase();
+          if (tag === 'BR') {
+            lines.push([]);
+            return;
+          }
+          const nextOpts = { ...currentOpts };
           if (tag === 'B' || tag === 'STRONG') nextOpts.bold = true;
           if (tag === 'I' || tag === 'EM') nextOpts.italics = true;
           node.childNodes.forEach(child => walk(child, nextOpts));
@@ -699,18 +663,17 @@
       }
       walk(domNode, baseOptions);
       
-      // Фоллбек: если теги поломаны, но текст есть, возвращаем его простым куском
-      if (runs.length === 0 && domNode.textContent && domNode.textContent.trim()) {
-        runs.push(new docx.TextRun({
+      if (lines.length === 1 && lines[0].length === 0 && domNode.textContent && domNode.textContent.trim()) {
+        lines[0].push({
           text: domNode.textContent.trim(),
           font: 'Times New Roman',
           color: '000000',
           size: baseOptions.size || 28,
           bold: Boolean(baseOptions.bold),
           italics: Boolean(baseOptions.italics)
-        }));
+        });
       }
-      return runs;
+      return lines;
     }
 
     async function generateGostDoc(sourceHtml) {
@@ -725,15 +688,37 @@
       const parser = new DOMParser();
       const docHtml = parser.parseFromString(sourceHtml, 'text/html');
       
-      const nodes = Array.from(docHtml.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, table, li'));
+      const allNodes = Array.from(docHtml.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, table, li'));
+      const validNodes = [];
+      
+      // Защита от дублирования текста из вложенных таблиц и списков
+      for (const node of allNodes) {
+        if (node.nodeName !== 'TABLE' && node.closest('table')) continue;
+        if (node.nodeName === 'P' && node.closest('li')) continue;
+        validNodes.push(node);
+      }
 
       let textTableRows = [];
       let tableCounter = 1;
       let pendingTableCaption = false;
       let isFirstSection = true;
 
+      // Отрисовка markdown таблиц
       function flushTextTable() {
-        if (textTableRows.length > 0) {
+        if (textTableRows.length === 1) {
+            // Если была всего одна строка с "|", выводим как обычный текст
+            elements.push(new Paragraph({
+              alignment: AlignmentType.JUSTIFIED,
+              indent: { firstLine: convertMillimetersToTwip(12.5) },
+              spacing: { line: 360 },
+              children: [new TextRun({ text: textTableRows[0].join(' | '), font: 'Times New Roman', size: 28, color: '000000' })]
+            }));
+            textTableRows = [];
+            pendingTableCaption = false;
+            return;
+        }
+
+        if (textTableRows.length > 1) {
           if (!pendingTableCaption) {
             elements.push(new Paragraph({
               alignment: AlignmentType.LEFT,
@@ -780,35 +765,43 @@
         }
       }
 
-      for (const node of nodes) {
-        try {
-          if (node.nodeName !== 'TABLE') {
-            const htmlParts = node.innerHTML.split(/<br\s*\/?>/i);
-            const lines = htmlParts.map(part => {
-              const div = document.createElement('div');
-              div.innerHTML = part;
-              return div;
-            });
+      for (const node of validNodes) {
+        if (node.nodeName !== 'TABLE') {
+          const rawNodeText = (node.textContent || '').trim();
+          const isListHeader = rawNodeText.endsWith(':') && rawNodeText.length < 150;
+          
+          let prefix = "";
+          if (node.nodeName === 'LI') {
+              const parent = node.parentElement;
+              if (parent && parent.nodeName === 'UL') {
+                  prefix = "– ";
+              } else if (parent && parent.nodeName === 'OL') {
+                  const index = Array.from(parent.children).indexOf(node) + 1;
+                  prefix = index + ". ";
+              }
+          }
 
-            for (const lineNode of lines) {
-              const rawText = lineNode.textContent || '';
-              let text = rawText.replace(/\u00A0/g, ' ').trim();
-              if (!text) continue; 
+          const linesOpts = extractLines(node, { size: 28, bold: isListHeader });
 
-              if (node.nodeName === 'LI') {
-                 const parent = node.parentElement;
-                 if (parent && parent.nodeName === 'UL') {
-                     text = "– " + text;
-                 } else if (parent && parent.nodeName === 'OL') {
-                     const index = Array.from(parent.children).indexOf(node) + 1;
-                     text = index + ". " + text;
-                 }
+          for (let i = 0; i < linesOpts.length; i++) {
+              const lineOpts = linesOpts[i];
+              let lineText = lineOpts.map(o => o.text).join('').replace(/\u00A0/g, ' ').trim();
+              
+              if (!lineText && lineOpts.length === 0) continue;
+
+              // Маркер списка только для первой строчки
+              if (node.nodeName === 'LI' && i === 0 && prefix) {
+                  lineOpts.unshift({ text: prefix, font: 'Times New Roman', size: 28, bold: isListHeader, color: '000000' });
+                  lineText = prefix + lineText;
               }
 
-              if (text.includes('|') && text.split('|').length > 1) {
-                let cells = text.split('|').map(c => c.trim());
-                if (cells.length > 0 && cells[0] === '') cells.shift();
-                if (cells.length > 0 && cells[cells.length - 1] === '') cells.pop();
+              // Парсинг Markdown-таблиц
+              if (lineText.includes('|') && lineText.split('|').length > 1) {
+                if (/^[:\s\-–|]+$/.test(lineText)) continue; // Пропускаем разделители
+                
+                let cells = lineText.split('|').map(c => c.trim());
+                if (cells[0] === '') cells.shift();
+                if (cells[cells.length - 1] === '') cells.pop();
                 
                 if (cells.length > 0) {
                     textTableRows.push(cells);
@@ -820,117 +813,120 @@
 
               let isCaption = false;
 
-              // Добавили ТЕХНИЧЕСКОЕ ЗАДАНИЕ в список для центрирования
-              if (/^\s*(ТЕХНИЧЕСКОЕ ЗАДАНИЕ|ПОЯСНИТЕЛЬНАЯ ЗАПИСКА|ОТЧЕТ|РЕФЕРАТ|ВВЕДЕНИЕ|ЗАКЛЮЧЕНИЕ|СОДЕРЖАНИЕ|СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ|СПИСОК ЛИТЕРАТУРЫ|ПРИЛОЖЕНИ[ЕЯ])[\s.:]*$/i.test(text)) {
+              // Центрированные заголовки (ВВЕДЕНИЕ, ЗАКЛЮЧЕНИЕ и т.д.)
+              if (/^\s*(ТЕХНИЧЕСКОЕ ЗАДАНИЕ|ПОЯСНИТЕЛЬНАЯ ЗАПИСКА|ОТЧЕТ|РЕФЕРАТ|ВВЕДЕНИЕ|ЗАКЛЮЧЕНИЕ|СОДЕРЖАНИЕ|СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ|СПИСОК ЛИТЕРАТУРЫ|ПРИЛОЖЕНИ[ЕЯ])[\s.:]*$/i.test(lineText)) {
                 const doPageBreak = optPageBreaks && !isFirstSection;
                 isFirstSection = false;
+                
+                if (lineOpts.length > 0) {
+                    lineOpts[lineOpts.length - 1].text = lineOpts[lineOpts.length - 1].text.replace(/[\s.:]+$/, '');
+                }
+
                 elements.push(new Paragraph({
                   alignment: AlignmentType.CENTER,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 240, after: 240 },
                   pageBreakBefore: doPageBreak,
-                  children: [new TextRun({ text: text.replace(/[\s.:]+$/, '').toUpperCase(), font: 'Times New Roman', size: 28, bold: true, color: '000000' })]
+                  children: lineOpts.map(o => new TextRun({ ...o, bold: true, text: o.text.toUpperCase() }))
                 }));
-              // Слегка изменили регулярку для заголовков (теперь видит "1. Общие сведения")
-              } else if (/^\s*\d+(\.\d+)*\.?\s+[А-ЯЁA-Z]/i.test(text) && text.length < 160 && !text.endsWith(':')) {
-                const isChapter = /^\s*\d+\.?\s+[А-ЯЁA-Z]/i.test(text); 
-                const doPageBreak = isChapter && optPageBreaks && !isFirstSection;
-                if (isChapter) isFirstSection = false;
+
+// Нумерованные главы (строго с заглавной буквы, без флага /i)
+              } else if (node.nodeName !== 'LI' && /^\s*\d+(\.\d+)*\.?\s+[А-ЯЁA-Z]/.test(lineText) && lineText.length < 160 && !lineText.endsWith(':')) {
+                const isMainChapter = /^\s*\d+\.?\s+[А-ЯЁA-Z]/.test(lineText); 
+                const doPageBreak = isMainChapter && optPageBreaks && !isFirstSection;
+                if (isMainChapter) isFirstSection = false;
+                
+                if (lineOpts.length > 0) {
+                    lineOpts[lineOpts.length - 1].text = lineOpts[lineOpts.length - 1].text.replace(/\.+$/, '');
+                }
 
                 elements.push(new Paragraph({
                   alignment: AlignmentType.JUSTIFIED,
                   indent: { firstLine: convertMillimetersToTwip(12.5) },
                   spacing: { line: 360, before: 240, after: 240 },
                   pageBreakBefore: doPageBreak, 
-                  children: [new TextRun({ text: text.replace(/\.+$/, ''), font: 'Times New Roman', size: 28, bold: true, color: '000000' })]
+                  children: lineOpts.map(o => new TextRun({ ...o, bold: true }))
                 }));
-              } else if (/^Таблица/i.test(text)) {
-                let match = text.match(/^Таблица\s+(\d+)/i);
-                if (match) {
-                  tableCounter = parseInt(match[1], 10) + 1;
-                }
+
+              // Таблицы и Рисунки
+              } else if (/^Таблица/i.test(lineText)) {
+                let match = lineText.match(/^Таблица\s+(\d+)/i);
+                if (match) tableCounter = parseInt(match[1], 10) + 1;
 
                 elements.push(new Paragraph({
                   alignment: AlignmentType.LEFT,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 240, after: 120 },
-                  children: extractRuns(lineNode, { size: 28 })
+                  children: lineOpts.map(o => new TextRun(o))
                 }));
                 isCaption = true;
-              } else if (/^Рисунок\s+\d/i.test(text)) {
+              } else if (/^Рисунок\s+\d/i.test(lineText)) {
                 elements.push(new Paragraph({
                   alignment: AlignmentType.CENTER,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 120, after: 240 },
-                  children: extractRuns(lineNode, { size: 28 })
+                  children: lineOpts.map(o => new TextRun(o))
                 }));
               } else {
-                const isListHeader = text.endsWith(':') && text.length < 150;
-                
-                const runsToUse = (node.nodeName === 'LI') 
-                   ? [new TextRun({ text: text, font: 'Times New Roman', size: 28, bold: isListHeader, color: '000000' })]
-                   : extractRuns(lineNode, { size: 28, bold: isListHeader });
-
+                // Обычный абзац
                 elements.push(new Paragraph({
                   alignment: AlignmentType.JUSTIFIED,
                   indent: { firstLine: convertMillimetersToTwip(12.5) },
                   spacing: { line: 360 },
-                  children: runsToUse
+                  children: lineOpts.map(o => new TextRun(o))
                 }));
               }
               pendingTableCaption = isCaption;
-            }
-          } else if (node.nodeName === 'TABLE') {
-            flushTextTable(); 
-
-            if (!pendingTableCaption) {
-              elements.push(new Paragraph({
-                alignment: AlignmentType.LEFT,
-                indent: { firstLine: 0 },
-                spacing: { line: 360, before: 240, after: 120 },
-                children: [new TextRun({ text: `Таблица ${tableCounter} - Название таблицы`, font: 'Times New Roman', size: 28, color: '000000' })]
-              }));
-              tableCounter++;
-            }
-            pendingTableCaption = false;
-
-            const rows = [];
-            const trs = node.querySelectorAll('tr');
-            const colsCount = trs.length > 0 ? trs[0].querySelectorAll('td, th').length : 1;
-            const safeColsCount = Math.max(colsCount, 1);
-            const colWidthPct = Math.floor(100 / safeColsCount);
-
-            trs.forEach((tr) => {
-              const cells = [];
-              tr.querySelectorAll('td, th').forEach((td) => {
-                cells.push(new TableCell({
-                  width: { size: colWidthPct, type: WidthType.PERCENTAGE },
-                  borders: {
-                    top: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
-                    bottom: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
-                    left: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
-                    right: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
-                  },
-                  children: [
-                    new Paragraph({
-                      spacing: { line: 240 },
-                      indent: { firstLine: 0 },
-                      children: extractRuns(td, { size: optTableFont })
-                    })
-                  ]
-                }));
-              });
-              if (cells.length > 0) rows.push(new TableRow({ children: cells }));
-            });
-
-            if (rows.length > 0) {
-              elements.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
-              elements.push(new Table({ rows: rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
-              elements.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
-            }
           }
-        } catch (nodeError) {
-           console.warn("Пропущен узел:", nodeError);
+        } else if (node.nodeName === 'TABLE') {
+          flushTextTable(); 
+
+          if (!pendingTableCaption) {
+            elements.push(new Paragraph({
+              alignment: AlignmentType.LEFT,
+              indent: { firstLine: 0 },
+              spacing: { line: 360, before: 240, after: 120 },
+              children: [new TextRun({ text: `Таблица ${tableCounter} - Название таблицы`, font: 'Times New Roman', size: 28, color: '000000' })]
+            }));
+            tableCounter++;
+          }
+          pendingTableCaption = false;
+
+          const rows = [];
+          const trs = node.querySelectorAll('tr');
+          const colsCount = trs.length > 0 ? trs[0].querySelectorAll('td, th').length : 1;
+          const safeColsCount = Math.max(colsCount, 1);
+          const colWidthPct = Math.floor(100 / safeColsCount);
+
+          trs.forEach((tr) => {
+            const cells = [];
+            tr.querySelectorAll('td, th').forEach((td) => {
+              const tdLines = extractLines(td, { size: optTableFont });
+              const paragraphs = tdLines.map(lineOpts => new Paragraph({
+                  spacing: { line: 240 },
+                  indent: { firstLine: 0 },
+                  children: lineOpts.length > 0 ? lineOpts.map(o => new TextRun(o)) : [new TextRun({ text: '', font: 'Times New Roman', size: optTableFont })]
+              }));
+
+              cells.push(new TableCell({
+                width: { size: colWidthPct, type: WidthType.PERCENTAGE },
+                borders: {
+                  top: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
+                  bottom: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
+                  left: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
+                  right: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
+                },
+                children: paragraphs.length > 0 ? paragraphs : [new Paragraph({ children: [new TextRun({ text: '' })] })]
+              }));
+            });
+            if (cells.length > 0) rows.push(new TableRow({ children: cells }));
+          });
+
+          if (rows.length > 0) {
+            elements.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
+            elements.push(new Table({ rows: rows, width: { size: 100, type: WidthType.PERCENTAGE } }));
+            elements.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
+          }
         }
       }
 
@@ -987,10 +983,7 @@
         }],
       });
 
-      let finalFileName = outFileNameInput.value.trim();
-      if (!finalFileName) {
-        finalFileName = "Отформатировано_plus";
-      }
+      let finalFileName = outFileNameInput.value.trim() || "Отформатировано_plus";
       if (!finalFileName.toLowerCase().endsWith('.docx')) {
         finalFileName += '.docx';
       }
