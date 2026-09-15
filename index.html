@@ -406,7 +406,7 @@
 
     <div id="fileNameGroup" class="file-name-group">
       <label for="outFileName">Имя сохраняемого файла (без .docx):</label>
-      <input type="text" id="outFileName" class="input-text" placeholder="Например: Курсовая_Иванов_ГОСТ">
+      <input type="text" id="outFileName" class="input-text" placeholder="Например: Лабораторная №4">
     </div>
 
     <button id="processBtn" class="btn-primary" disabled>Начать форматирование</button>
@@ -438,8 +438,8 @@
       <div class="setting-item">
         <span>Размер шрифта в таблицах</span>
         <select id="optTableFont" class="setting-select">
-          <option value="24">12 pt (ГОСТ)</option>
-          <option value="20">10 pt (ГОСТ)</option>
+          <option value="24">12 pt</option>
+          <option value="20">10 pt</option>
         </select>
       </div>
     </div>
@@ -479,7 +479,7 @@
         fileNameDiv.innerText = `Исходный файл: ${uploadedFile.name}`;
         
         let baseName = uploadedFile.name.replace(/\.[^/.]+$/, ""); 
-        outFileNameInput.value = baseName + "_ГОСТ";
+        outFileNameInput.value = baseName + "_plus";
         
         fileNameGroup.style.display = 'block';
         processBtn.disabled = false;
@@ -533,7 +533,7 @@
             try {
               await generateGostDoc(resultHtml);
             } catch (docxError) {
-              throw new Error("Ошибка при формировании ГОСТ-документа. Детали: " + docxError.message);
+              throw new Error("Ошибка при формировании документа. Детали: " + docxError.message);
             }
             
             document.querySelector('.spinner').style.display = 'none';
@@ -868,7 +868,7 @@
         creator: "https://formatter-one.vercel.app/",
         description: "formatted with https://formatter-one.vercel.app/",
         lastModifiedBy: "https://formatter-one.vercel.app/",
-        title: "Документ ГОСТ",
+        title: "Документ plus",
         sections: [{
           properties: sectionProperties,
           footers: footersObj,
@@ -878,7 +878,7 @@
 
       let finalFileName = outFileNameInput.value.trim();
       if (!finalFileName) {
-        finalFileName = "Отформатировано_ГОСТ";
+        finalFileName = "Отформатировано_plus";
       }
       if (!finalFileName.toLowerCase().endsWith('.docx')) {
         finalFileName += '.docx';
