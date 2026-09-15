@@ -107,6 +107,77 @@
       color: #4338ca;
     }
 
+    .features-details {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: left;
+      font-size: 13.5px;
+      color: #475569;
+      overflow: hidden;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .features-details.is-open {
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .features-summary {
+      padding: 14px 18px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      outline: none;
+    }
+
+    .features-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .features-summary::after {
+      content: '›';
+      font-size: 18px;
+      line-height: 1;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #94a3b8;
+    }
+
+    .features-details.is-open .features-summary::after {
+      transform: rotate(90deg);
+    }
+
+    /* Плавный контейнер контента */
+    .features-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .features-inner {
+      padding: 0 18px 16px 18px;
+      border-top: 1px solid #f1f5f9;
+      line-height: 1.5;
+    }
+
+    .features-inner ul {
+      margin: 10px 0 0 0;
+      padding-left: 20px;
+    }
+
+    .features-inner li {
+      margin-bottom: 6px;
+    }
+
+    .features-inner li:last-child {
+      margin-bottom: 0;
+    }
     /* Поле выбора файла */
     .custom-file-upload {
       display: inline-block;
@@ -394,7 +465,25 @@
     <h2>Formatter</h2>
     
     <div class="warning-box">Документ автоматически форматируется согласно <a href="https://bi.nsuem.ru/upload/iblock/d60/%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%20%D0%BE%D0%B1%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F.pdf" target="_blank" style="color: #4f46e5; text-decoration: none; border-bottom: 1px dashed #4f46e5;">официальным правилам оформления НГУЭУ</a>.
+  </div>
+
+  <details class="features-details" id="featuresDetails">
+    <summary class="features-summary">
+      💡 Что умеет этот сервис?
+    </summary>
+    <div class="features-content" id="featuresContent">
+      <div class="features-inner">
+        <ul>
+          <li><strong>ГОСТ-стандарты полей:</strong> левое 30 мм, правое 10 мм, верх/низ по 20 мм.</li>
+          <li><strong>Типографика:</strong> единый шрифт Times New Roman (14 pt для текста, 1.5 интервал, абзацный отступ 1.25 см).</li>
+          <li><strong>Структура и разделы:</strong> центрирование ключевых блоков (Введение, Заключение, Список источников, ТЗ) и сквозная нумерация глав.</li>
+          <li><strong>Умные таблицы:</strong> автонумерация «Таблица N», границы по ГОСТу и выбор размера шрифта ячеек (10 или 12 pt).</li>
+          <li><strong>Форматы:</strong> чтение <code>.docx</code> и <code>.txt</code> (включая markdown-таблицы с <code>|</code>).</li>
+          <li><strong>Нумерация:</strong> сквозные номера страниц снизу по центру с отключением на титульнике.</li>
+        </ul>
+      </div>
     </div>
+  </details>
 
     <!-- Улучшение: поддержка обычных текстовых файлов -->
     <label for="fileInput" class="custom-file-upload">
@@ -559,6 +648,28 @@
         reader.readAsArrayBuffer(uploadedFile);
       } catch (error) {
          console.error(error);
+      }
+    });
+
+    const featDetails = document.getElementById('featuresDetails');
+    const featContent = document.getElementById('featuresContent');
+    const featSummary = featDetails.querySelector('.features-summary');
+
+    featSummary.addEventListener('click', (e) => {
+      e.preventDefault(); // Предотвращаем мгновенное скрытие браузером
+
+      if (!featDetails.classList.contains('is-open')) {
+        featDetails.setAttribute('open', '');
+        featDetails.classList.add('is-open');
+        featContent.style.maxHeight = featContent.scrollHeight + 'px';
+      } else {
+        featDetails.classList.remove('is-open');
+        featContent.style.maxHeight = '0px';
+        setTimeout(() => {
+          if (!featDetails.classList.contains('is-open')) {
+            featDetails.removeAttribute('open');
+          }
+        }, 350); // Ждём завершения CSS-анимации
       }
     });
 
