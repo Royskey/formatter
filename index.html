@@ -391,7 +391,7 @@
   </a>
   
   <div class="container">
-    <h2>Formatter (Beta)</h2>
+    <h2>Formatter</h2>
     
     <div class="warning-box">Документ автоматически форматируется согласно <a href="https://bi.nsuem.ru/upload/iblock/d60/%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%20%D0%BE%D0%B1%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F.pdf" target="_blank" style="color: #4f46e5; text-decoration: none; border-bottom: 1px dashed #4f46e5;">официальным правилам оформления НГУЭУ</a>.
     </div>
@@ -454,7 +454,7 @@
     made with 💜 by <span style="color: rgba(255, 255, 255, 0.7); font-weight: 600;">me</span>
   </footer>
 
-  <script>
+  <script><script>
     const fileInput = document.getElementById('fileInput');
     const processBtn = document.getElementById('processBtn');
     const statusDiv = document.getElementById('status');
@@ -479,7 +479,7 @@
         fileNameDiv.innerText = `Исходный файл: ${uploadedFile.name}`;
         
         let baseName = uploadedFile.name.replace(/\.[^/.]+$/, ""); 
-        outFileNameInput.value = baseName + "_plus";
+        outFileNameInput.value = baseName + "_ГОСТ";
         
         fileNameGroup.style.display = 'block';
         processBtn.disabled = false;
@@ -500,7 +500,7 @@
       
       setTimeout(() => statusDiv.innerText = "Чтение файла...", 500);
       setTimeout(() => statusDiv.innerText = "Анализ структуры...", 1500);
-      setTimeout(() => statusDiv.innerText = "Применение стилей...", 2500);
+      setTimeout(() => statusDiv.innerText = "Применение стилей ГОСТ НГУЭУ...", 2500);
       setTimeout(() => statusDiv.innerText = "Внедрение метаданных и сохранение...", 3200);
 
       try {
@@ -512,24 +512,28 @@
             const arrayBuffer = event.target.result;
             let resultHtml = "";
             
-            // Умная обработка .txt файлов с проверкой кодировки (UTF-8 / Win-1251)
+            // ВЕРНУЛИ БЛОК ДЛЯ DOCX ФАЙЛОВ
             if (uploadedFile.name.toLowerCase().endsWith('.txt')) {
                 let text = "";
                 try {
-                    // Пробуем строгий UTF-8: если есть хоть один битый байт CP1251, он упадет в catch
                     text = new TextDecoder('utf-8', { fatal: true }).decode(arrayBuffer);
                 } catch (e) {
-                    // Падение означает, что файл сохранен в кодировке Windows-1251 (ANSI)
                     text = new TextDecoder('windows-1251').decode(arrayBuffer);
                 }
-
                 resultHtml = text.split(/\r?\n/).map(line => `<p>${line}</p>`).join('');
+            } else {
+                try {
+                  const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+                  resultHtml = result.value;
+                } catch (mammothError) {
+                  throw new Error("Ошибка при чтении файла. Детали: " + mammothError.message);
+                }
             }
             
             try {
               await generateGostDoc(resultHtml);
             } catch (docxError) {
-              throw new Error("Ошибка при формировании документа. Детали: " + docxError.message);
+              throw new Error("Ошибка при формировании ГОСТ-документа. Детали: " + docxError.message);
             }
             
             document.querySelector('.spinner').style.display = 'none';
@@ -558,6 +562,7 @@
       }
     });
 
+    // Улучшенный extractRuns с защитой от пропажи текста
     function extractRuns(domNode, baseOptions = {}) {
       const runs = [];
       function walk(node, currentOpts) {
@@ -569,8 +574,8 @@
               font: 'Times New Roman',
               color: '000000',
               size: currentOpts.size || 28,
-              bold: currentOpts.bold || false,
-              italics: currentOpts.italics || false
+              bold: Boolean(currentOpts.bold),
+              italics: Boolean(currentOpts.italics)
             }));
           }
         } else if (node.nodeType === Node.ELEMENT_NODE) {
@@ -582,6 +587,18 @@
         }
       }
       walk(domNode, baseOptions);
+      
+      // Фоллбек: если теги поломаны, но текст есть, возвращаем его простым куском
+      if (runs.length === 0 && domNode.textContent && domNode.textContent.trim()) {
+        runs.push(new docx.TextRun({
+          text: domNode.textContent.trim(),
+          font: 'Times New Roman',
+          color: '000000',
+          size: baseOptions.size || 28,
+          bold: Boolean(baseOptions.bold),
+          italics: Boolean(baseOptions.italics)
+        }));
+      }
       return runs;
     }
 
@@ -597,12 +614,12 @@
       const parser = new DOMParser();
       const docHtml = parser.parseFromString(sourceHtml, 'text/html');
       
-      // Исправление бага со списками: теперь мы берем li наравне с p и h1-h6
       const nodes = Array.from(docHtml.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, table, li'));
 
       let textTableRows = [];
       let tableCounter = 1;
       let pendingTableCaption = false;
+      let isFirstSection = true;
 
       function flushTextTable() {
         if (textTableRows.length > 0) {
@@ -667,7 +684,6 @@
               let text = rawText.replace(/\u00A0/g, ' ').trim();
               if (!text) continue; 
 
-              // Применяем маркеры списков
               if (node.nodeName === 'LI') {
                  const parent = node.parentElement;
                  if (parent && parent.nodeName === 'UL') {
@@ -678,7 +694,6 @@
                  }
               }
 
-              // Исправленная логика текстовых таблиц
               if (text.includes('|') && text.split('|').length > 1) {
                 let cells = text.split('|').map(c => c.trim());
                 if (cells.length > 0 && cells[0] === '') cells.shift();
@@ -694,21 +709,28 @@
 
               let isCaption = false;
 
-              if (/^\s*(ВВЕДЕНИЕ|ЗАКЛЮЧЕНИЕ|СОДЕРЖАНИЕ|СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ|СПИСОК ЛИТЕРАТУРЫ|ПРИЛОЖЕНИ[ЕЯ])[\s.:]*$/i.test(text)) {
+              // Добавили ТЕХНИЧЕСКОЕ ЗАДАНИЕ в список для центрирования
+              if (/^\s*(ТЕХНИЧЕСКОЕ ЗАДАНИЕ|ПОЯСНИТЕЛЬНАЯ ЗАПИСКА|ОТЧЕТ|РЕФЕРАТ|ВВЕДЕНИЕ|ЗАКЛЮЧЕНИЕ|СОДЕРЖАНИЕ|СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ|СПИСОК ЛИТЕРАТУРЫ|ПРИЛОЖЕНИ[ЕЯ])[\s.:]*$/i.test(text)) {
+                const doPageBreak = optPageBreaks && !isFirstSection;
+                isFirstSection = false;
                 elements.push(new Paragraph({
                   alignment: AlignmentType.CENTER,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 240, after: 240 },
-                  pageBreakBefore: optPageBreaks,
+                  pageBreakBefore: doPageBreak,
                   children: [new TextRun({ text: text.replace(/[\s.:]+$/, '').toUpperCase(), font: 'Times New Roman', size: 28, bold: true, color: '000000' })]
                 }));
-              } else if (/^\s*\d+(\.\d+)*\s+[А-ЯA-Z]/i.test(text) && text.length < 160 && !text.endsWith(':')) {
-                const isChapter = /^\s*\d+\s+[А-ЯA-Z]/i.test(text); 
+              // Слегка изменили регулярку для заголовков (теперь видит "1. Общие сведения")
+              } else if (/^\s*\d+(\.\d+)*\.?\s+[А-ЯЁA-Z]/i.test(text) && text.length < 160 && !text.endsWith(':')) {
+                const isChapter = /^\s*\d+\.?\s+[А-ЯЁA-Z]/i.test(text); 
+                const doPageBreak = isChapter && optPageBreaks && !isFirstSection;
+                if (isChapter) isFirstSection = false;
+
                 elements.push(new Paragraph({
                   alignment: AlignmentType.JUSTIFIED,
                   indent: { firstLine: convertMillimetersToTwip(12.5) },
                   spacing: { line: 360, before: 240, after: 240 },
-                  pageBreakBefore: isChapter && optPageBreaks, 
+                  pageBreakBefore: doPageBreak, 
                   children: [new TextRun({ text: text.replace(/\.+$/, ''), font: 'Times New Roman', size: 28, bold: true, color: '000000' })]
                 }));
               } else if (/^Таблица/i.test(text)) {
@@ -721,7 +743,7 @@
                   alignment: AlignmentType.LEFT,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 240, after: 120 },
-                  children: [new TextRun({ text: text, font: 'Times New Roman', size: 28, color: '000000' })]
+                  children: extractRuns(lineNode, { size: 28 })
                 }));
                 isCaption = true;
               } else if (/^Рисунок\s+\d/i.test(text)) {
@@ -729,12 +751,11 @@
                   alignment: AlignmentType.CENTER,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 120, after: 240 },
-                  children: [new TextRun({ text: text, font: 'Times New Roman', size: 28, color: '000000' })]
+                  children: extractRuns(lineNode, { size: 28 })
                 }));
               } else {
                 const isListHeader = text.endsWith(':') && text.length < 150;
                 
-                // Пересобираем форматирование для узла или берем готовый текст
                 const runsToUse = (node.nodeName === 'LI') 
                    ? [new TextRun({ text: text, font: 'Times New Roman', size: 28, bold: isListHeader, color: '000000' })]
                    : extractRuns(lineNode, { size: 28, bold: isListHeader });
@@ -821,7 +842,6 @@
 
       const footersObj = {};
       
-      // Исправление логики титульного листа для Microsoft Word
       if (optTitlePage) {
         sectionProperties.titlePage = true;
         footersObj.first = new Footer({ children: [new Paragraph({ children: [] })] });
@@ -867,6 +887,7 @@
       const blob = await Packer.toBlob(doc);
       saveAs(blob, finalFileName);
     }
+  </script>
   </script>
 </body>
 </html>
