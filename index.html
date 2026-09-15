@@ -12,14 +12,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   
   <style>
+    /* Базовые настройки */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
       min-height: 100vh;
       display: flex;
-      flex-direction: column; 
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      padding: 20px 16px;
       background: linear-gradient(-45deg, #4f46e5, #ec4899, #8b5cf6, #3b82f6);
       background-size: 400% 400%;
       animation: gradientBG 12s ease infinite;
@@ -31,192 +36,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 40px 50px;
-      border-radius: 24px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-      max-width: 550px;
-      width: 100%;
-      text-align: center;
-      box-sizing: border-box;
-    }
-
-    h2 { margin-top: 0; color: #1e293b; font-size: 26px; }
-
-    .warning-box {
-      background: #fffbeb;
-      border-left: 4px solid #f59e0b;
-      color: #b45309;
-      padding: 15px;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-bottom: 25px;
-      text-align: left;
-      line-height: 1.4;
-    }
-
-    .custom-file-upload {
-      display: inline-block;
-      padding: 16px 32px;
-      cursor: pointer;
-      background: #f1f5f9;
-      color: #475569;
-      border: 2px dashed #cbd5e1;
-      border-radius: 12px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      width: 80%;
-      box-sizing: border-box;
-    }
-
-    .custom-file-upload:hover { background: #e2e8f0; border-color: #94a3b8; }
-    
-    .file-name {
-      margin: 15px 0 10px 0;
-      font-size: 14px;
-      color: #10b981;
-      font-weight: 600;
-      min-height: 20px;
-      word-break: break-all;
-    }
-
-    .file-name-group {
-      display: none; 
-      text-align: left;
-      margin-bottom: 20px;
-    }
-    
-    .file-name-group label {
-      font-size: 13px;
-      color: #475569;
-      font-weight: 600;
-      margin-bottom: 6px;
-      display: block;
-    }
-    
-    .input-text {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      font-family: inherit;
-      color: #334155;
-      outline: none;
-      box-sizing: border-box;
-      font-size: 14px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    
-    .input-text:focus {
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-    }
-
-    .btn-primary, .btn-settings {
-      border: none;
-      padding: 14px 32px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      width: 100%;
-      transition: all 0.3s ease;
-      box-sizing: border-box;
-    }
-
-    .btn-primary {
-      background: #4f46e5;
-      color: white;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
-      margin-bottom: 15px;
-    }
-
-    .btn-primary:hover:not(:disabled) { background: #4338ca; transform: translateY(-2px); }
-    .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
-
-    .btn-settings {
-      background: #f8fafc;
-      color: #475569;
-      border: 1px solid #e2e8f0;
-      font-size: 14px;
-      padding: 10px;
-    }
-    .btn-settings:hover { background: #f1f5f9; color: #1e293b; }
-
-    .settings-panel {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease-out, margin 0.4s ease;
-      text-align: left;
-      background: #f8fafc;
-      border-radius: 12px;
-      margin-top: 0;
-    }
-    
-    .settings-panel.open {
-      max-height: 400px;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      padding: 20px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .setting-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      font-size: 14px;
-      color: #334155;
-      font-weight: 500;
-    }
-    .setting-item:last-child { margin-bottom: 0; }
-
-    .setting-select {
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      font-family: inherit;
-      color: #334155;
-      outline: none;
-    }
-
-    .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #cbd5e1; transition: .4s; border-radius: 24px;
-    }
-    .slider:before {
-      position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
-      background-color: white; transition: .4s; border-radius: 50%;
-    }
-    input:checked + .slider { background-color: #10b981; }
-    input:checked + .slider:before { transform: translateX(20px); }
-
-    .loader-wrapper {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-    }
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #e2e8f0;
-      border-top: 4px solid #4f46e5;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 15px;
-    }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    
-    #status { font-weight: 600; color: #475569; font-size: 15px; }
-    .success-msg { color: #16a34a !important; font-size: 18px !important; }
-    .error-msg { color: #dc2626 !important; }
-
+    /* Кнопка "Назад" */
     .top-left-link {
       position: absolute;
       top: 24px;
@@ -243,35 +63,303 @@
       background: #ffffff;
     }
 
-        /* Делаем body удобным для вертикального скролла при раскрытых настройках */
-    body {
-      box-sizing: border-box;
-      padding: 80px 16px 30px 16px; /* Оставляем место сверху под кнопку 'Назад' */
-      justify-content: flex-start;  /* Чтобы при скролле шапка не улетала вверх за экран */
+    /* Основной контейнер (Идеальное центрирование) */
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px 50px;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      max-width: 550px;
+      width: 100%;
+      text-align: center;
+      margin: auto; /* Центрирует блок и по вертикали, и по горизонтали */
     }
 
-    /* На экранах шире мобильных центрируем обратно */
-    @media (min-height: 750px) and (min-width: 600px) {
-      body {
-        justify-content: center;
-        padding-top: 20px;
-      }
+    h2 {
+      margin-top: 0;
+      color: #1e293b;
+      font-size: 26px;
+      margin-bottom: 20px;
     }
 
-    /* Адаптив для карточки и элементов управления */
+    /* Блок с предупреждением */
+    .warning-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      color: #b45309;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 25px;
+      text-align: left;
+      line-height: 1.4;
+    }
+
+    .warning-box a {
+      color: #4f46e5;
+      text-decoration: none;
+      border-bottom: 1px dashed #4f46e5;
+      transition: color 0.3s ease;
+    }
+
+    .warning-box a:hover {
+      color: #4338ca;
+    }
+
+    /* Поле выбора файла */
+    .custom-file-upload {
+      display: inline-block;
+      padding: 16px 32px;
+      cursor: pointer;
+      background: #f1f5f9;
+      color: #475569;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 80%;
+    }
+
+    .custom-file-upload:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+
+    .file-name {
+      margin: 15px 0 10px 0;
+      font-size: 14px;
+      color: #10b981;
+      font-weight: 600;
+      min-height: 20px;
+      word-break: break-all;
+    }
+
+    /* Название исходящего файла */
+    .file-name-group {
+      display: none;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .file-name-group label {
+      font-size: 13px;
+      color: #475569;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .input-text {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-family: inherit;
+      color: #334155;
+      outline: none;
+      font-size: 14px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .input-text:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    /* Кнопки действий */
+    .btn-primary, .btn-settings {
+      border: none;
+      padding: 14px 32px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+      margin-bottom: 15px;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #4338ca;
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-settings {
+      background: #f8fafc;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .btn-settings:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    /* Панель расширенных настроек */
+    .settings-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, margin 0.4s ease, padding 0.4s ease;
+      text-align: left;
+      background: #f8fafc;
+      border-radius: 12px;
+      margin-top: 0;
+      border: 1px solid transparent;
+    }
+
+    .settings-panel.open {
+      max-height: 400px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      padding: 20px;
+      border-color: #e2e8f0;
+    }
+
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #334155;
+      font-weight: 500;
+      gap: 15px;
+    }
+
+    .setting-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .setting-select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-family: inherit;
+      color: #334155;
+      outline: none;
+    }
+
+    /* Переключатели (Тумблеры) */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0; /* Защита от сплющивания на смартфонах */
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #cbd5e1;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #10b981;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Загрузчик и статусы */
+    .loader-wrapper {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e2e8f0;
+      border-top: 4px solid #4f46e5;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    #status {
+      font-weight: 600;
+      color: #475569;
+      font-size: 15px;
+    }
+
+    .success-msg { color: #16a34a !important; font-size: 18px !important; }
+    .error-msg { color: #dc2626 !important; }
+
+    /* Подвал */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.5px;
+      padding: 15px 0 5px 0;
+    }
+
+    footer span {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+    }
+
+    /* Адаптивность под мобильные устройства */
     @media (max-width: 600px) {
+      body {
+        padding-top: 75px; /* Освобождаем место для кнопки "Назад", чтобы она не перекрывала контейнер */
+      }
+
       .top-left-link {
-        top: 14px;
-        left: 14px;
+        top: 16px;
+        left: 16px;
         padding: 8px 16px;
         font-size: 13px;
         border-radius: 10px;
       }
 
       .container {
-        padding: 24px 20px; /* Уменьшаем внутренние поля, чтобы дать место контенту */
+        padding: 24px 20px;
         border-radius: 18px;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       }
 
       h2 {
@@ -279,19 +367,14 @@
       }
 
       .custom-file-upload {
-        width: 100%; /* На смартфонах кнопка выбора файла во всю ширину */
+        width: 100%;
         padding: 14px 16px;
-        font-size: 15px;
+        font-size: 14px;
       }
 
       .btn-primary, .btn-settings {
-        padding: 12px 20px;
-        font-size: 15px;
-      }
-
-      .warning-box {
-        font-size: 13px;
         padding: 12px;
+        font-size: 15px;
       }
 
       .setting-item {
