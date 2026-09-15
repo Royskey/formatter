@@ -373,18 +373,16 @@
             
             // Умная обработка .txt файлов с проверкой кодировки (UTF-8 / Win-1251)
             if (uploadedFile.name.toLowerCase().endsWith('.txt')) {
-                let text = new TextDecoder('utf-8').decode(arrayBuffer);
-                if (text.includes('')) {
+                let text = "";
+                try {
+                    // Пробуем строгий UTF-8: если есть хоть один битый байт CP1251, он упадет в catch
+                    text = new TextDecoder('utf-8', { fatal: true }).decode(arrayBuffer);
+                } catch (e) {
+                    // Падение означает, что файл сохранен в кодировке Windows-1251 (ANSI)
                     text = new TextDecoder('windows-1251').decode(arrayBuffer);
                 }
+
                 resultHtml = text.split(/\r?\n/).map(line => `<p>${line}</p>`).join('');
-            } else {
-                try {
-                  const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-                  resultHtml = result.value;
-                } catch (mammothError) {
-                  throw new Error("Ошибка при чтении файла. Детали: " + mammothError.message);
-                }
             }
             
             try {
