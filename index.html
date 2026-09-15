@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Formatter</title>
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230b021a%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-family=%22sans-serif%22>N</text></svg>">
@@ -240,6 +241,63 @@
       transform: translateY(-2px);
       box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       background: #ffffff;
+    }
+
+        /* Делаем body удобным для вертикального скролла при раскрытых настройках */
+    body {
+      box-sizing: border-box;
+      padding: 80px 16px 30px 16px; /* Оставляем место сверху под кнопку 'Назад' */
+      justify-content: flex-start;  /* Чтобы при скролле шапка не улетала вверх за экран */
+    }
+
+    /* На экранах шире мобильных центрируем обратно */
+    @media (min-height: 750px) and (min-width: 600px) {
+      body {
+        justify-content: center;
+        padding-top: 20px;
+      }
+    }
+
+    /* Адаптив для карточки и элементов управления */
+    @media (max-width: 600px) {
+      .top-left-link {
+        top: 14px;
+        left: 14px;
+        padding: 8px 16px;
+        font-size: 13px;
+        border-radius: 10px;
+      }
+
+      .container {
+        padding: 24px 20px; /* Уменьшаем внутренние поля, чтобы дать место контенту */
+        border-radius: 18px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      .custom-file-upload {
+        width: 100%; /* На смартфонах кнопка выбора файла во всю ширину */
+        padding: 14px 16px;
+        font-size: 15px;
+      }
+
+      .btn-primary, .btn-settings {
+        padding: 12px 20px;
+        font-size: 15px;
+      }
+
+      .warning-box {
+        font-size: 13px;
+        padding: 12px;
+      }
+
+      .setting-item {
+        font-size: 13px;
+        gap: 12px;
+      }
     }
   </style>
 </head>
