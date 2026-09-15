@@ -246,11 +246,11 @@
 <body>
 
   <a href="https://nsuem.vercel.app/" target="_blank" class="top-left-link">
-    🔗 Назад
+    🔗 Services
   </a>
   
   <div class="container">
-    <h2>ГОСТ Форматтер</h2>
+    <h2>Formatter</h2>
     
     <div class="warning-box">Документ автоматически форматируется согласно <a href="https://bi.nsuem.ru/upload/iblock/d60/%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%20%D0%BE%D0%B1%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F.pdf" target="_blank" style="color: #4f46e5; text-decoration: none; border-bottom: 1px dashed #4f46e5;">официальным правилам оформления НГУЭУ</a>.
     </div>
@@ -338,7 +338,7 @@
         fileNameDiv.innerText = `Исходный файл: ${uploadedFile.name}`;
         
         let baseName = uploadedFile.name.replace(/\.[^/.]+$/, ""); 
-        outFileNameInput.value = baseName + "_ГОСТ";
+        outFileNameInput.value = baseName + "_plus";
         
         fileNameGroup.style.display = 'block';
         processBtn.disabled = false;
@@ -359,7 +359,7 @@
       
       setTimeout(() => statusDiv.innerText = "Чтение файла...", 500);
       setTimeout(() => statusDiv.innerText = "Анализ структуры...", 1500);
-      setTimeout(() => statusDiv.innerText = "Применение стилей ГОСТ НГУЭУ...", 2500);
+      setTimeout(() => statusDiv.innerText = "Применение стилей...", 2500);
       setTimeout(() => statusDiv.innerText = "Внедрение метаданных и сохранение...", 3200);
 
       try {
@@ -390,7 +390,7 @@
             try {
               await generateGostDoc(resultHtml);
             } catch (docxError) {
-              throw new Error("Ошибка при формировании ГОСТ-документа. Детали: " + docxError.message);
+              throw new Error("Ошибка при формировании документа. Детали: " + docxError.message);
             }
             
             document.querySelector('.spinner').style.display = 'none';
