@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Formatter</title>
+  <title>ГОСТ Форматтер</title>
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230b021a%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 font-weight=%22bold%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-family=%22sans-serif%22>N</text></svg>">
 
@@ -81,12 +81,12 @@
       word-break: break-all;
     }
 
-    /* Поле ввода имени файла */
     .file-name-group {
       display: none; 
       text-align: left;
       margin-bottom: 20px;
     }
+    
     .file-name-group label {
       font-size: 13px;
       color: #475569;
@@ -94,6 +94,7 @@
       margin-bottom: 6px;
       display: block;
     }
+    
     .input-text {
       width: 100%;
       padding: 12px;
@@ -106,12 +107,12 @@
       font-size: 14px;
       transition: border-color 0.3s, box-shadow 0.3s;
     }
+    
     .input-text:focus {
       border-color: #4f46e5;
       box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
     }
 
-    /* Кнопки */
     .btn-primary, .btn-settings {
       border: none;
       padding: 14px 32px;
@@ -143,7 +144,6 @@
     }
     .btn-settings:hover { background: #f1f5f9; color: #1e293b; }
 
-    /* Панель настроек */
     .settings-panel {
       max-height: 0;
       overflow: hidden;
@@ -182,7 +182,6 @@
       outline: none;
     }
 
-    /* Переключатели */
     .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider {
@@ -196,7 +195,6 @@
     input:checked + .slider { background-color: #10b981; }
     input:checked + .slider:before { transform: translateX(20px); }
 
-    /* Анимация загрузки */
     .loader-wrapper {
       display: none;
       flex-direction: column;
@@ -218,49 +216,50 @@
     .success-msg { color: #16a34a !important; font-size: 18px !important; }
     .error-msg { color: #dc2626 !important; }
 
-        /* Кнопка-ссылка в левом верхнем углу */
     .top-left-link {
-    position: absolute;
-    top: 24px;
-    left: 24px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 12px 24px;
-    border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    text-decoration: none;
-    color: #1e293b;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 12px 24px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      text-decoration: none;
+      color: #1e293b;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .top-left-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-    background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      background: #ffffff;
     }
   </style>
 </head>
 <body>
 
-   <a href="https://nsuem.vercel.app/" target="_blank" class="top-left-link">
+  <a href="https://nsuem.vercel.app/" target="_blank" class="top-left-link">
     🔗 Назад
-    </a>
+  </a>
+  
   <div class="container">
-    <h2>Formatter</h2>
+    <h2>ГОСТ Форматтер</h2>
     
     <div class="warning-box">Документ автоматически форматируется согласно <a href="https://bi.nsuem.ru/upload/iblock/d60/%D0%9F%D0%BE%D1%80%D1%8F%D0%B4%D0%BE%D0%BA%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B8%20%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%20%D0%BE%D0%B1%D1%83%D1%87%D0%B0%D1%8E%D1%89%D0%B8%D1%85%D1%81%D1%8F.pdf" target="_blank" style="color: #4f46e5; text-decoration: none; border-bottom: 1px dashed #4f46e5;">официальным правилам оформления НГУЭУ</a>.
     </div>
 
+    <!-- Улучшение: поддержка обычных текстовых файлов -->
     <label for="fileInput" class="custom-file-upload">
-      📁 Выбрать файл .docx
+      📁 Выбрать файл (.docx, .txt)
     </label>
-    <input type="file" id="fileInput" accept=".docx" style="display: none;">
+    <input type="file" id="fileInput" accept=".docx, .txt" style="display: none;">
     
     <div id="fileName" class="file-name"></div>
 
@@ -358,7 +357,7 @@
       loader.style.display = 'flex';
       statusDiv.className = '';
       
-      setTimeout(() => statusDiv.innerText = "Извлечение текстовых узлов...", 500);
+      setTimeout(() => statusDiv.innerText = "Чтение файла...", 500);
       setTimeout(() => statusDiv.innerText = "Анализ структуры...", 1500);
       setTimeout(() => statusDiv.innerText = "Применение стилей ГОСТ НГУЭУ...", 2500);
       setTimeout(() => statusDiv.innerText = "Внедрение метаданных и сохранение...", 3200);
@@ -372,11 +371,20 @@
             const arrayBuffer = event.target.result;
             let resultHtml = "";
             
-            try {
-              const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-              resultHtml = result.value;
-            } catch (mammothError) {
-              throw new Error("Ошибка при чтении файла. Детали: " + mammothError.message);
+            // Умная обработка .txt файлов с проверкой кодировки (UTF-8 / Win-1251)
+            if (uploadedFile.name.toLowerCase().endsWith('.txt')) {
+                let text = new TextDecoder('utf-8').decode(arrayBuffer);
+                if (text.includes('')) {
+                    text = new TextDecoder('windows-1251').decode(arrayBuffer);
+                }
+                resultHtml = text.split(/\r?\n/).map(line => `<p>${line}</p>`).join('');
+            } else {
+                try {
+                  const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+                  resultHtml = result.value;
+                } catch (mammothError) {
+                  throw new Error("Ошибка при чтении файла. Детали: " + mammothError.message);
+                }
             }
             
             try {
@@ -449,16 +457,16 @@
       const elements = [];
       const parser = new DOMParser();
       const docHtml = parser.parseFromString(sourceHtml, 'text/html');
-      const nodes = Array.from(docHtml.body.childNodes);
+      
+      // Исправление бага со списками: теперь мы берем li наравне с p и h1-h6
+      const nodes = Array.from(docHtml.body.querySelectorAll('p, h1, h2, h3, h4, h5, h6, table, li'));
 
       let textTableRows = [];
       let tableCounter = 1;
       let pendingTableCaption = false;
 
-      // Функция выгрузки и сборки текстовой таблицы
       function flushTextTable() {
         if (textTableRows.length > 0) {
-          // Если подписи не было, создаем ее автоматически
           if (!pendingTableCaption) {
             elements.push(new Paragraph({
               alignment: AlignmentType.LEFT,
@@ -501,13 +509,13 @@
           elements.push(new Paragraph({ children: [] }));
           
           textTableRows = [];
-          pendingTableCaption = false; // Сбрасываем флаг после выгрузки таблицы
+          pendingTableCaption = false; 
         }
       }
 
       for (const node of nodes) {
         try {
-          if (node.nodeName === 'P' || /^H[1-6]$/.test(node.nodeName)) {
+          if (node.nodeName !== 'TABLE') {
             const htmlParts = node.innerHTML.split(/<br\s*\/?>/i);
             const lines = htmlParts.map(part => {
               const div = document.createElement('div');
@@ -517,14 +525,30 @@
 
             for (const lineNode of lines) {
               const rawText = lineNode.textContent || '';
-              const text = rawText.replace(/\u00A0/g, ' ').trim();
+              let text = rawText.replace(/\u00A0/g, ' ').trim();
               if (!text) continue; 
 
-              // Собираем текстовую таблицу, если в строке есть |
+              // Применяем маркеры списков
+              if (node.nodeName === 'LI') {
+                 const parent = node.parentElement;
+                 if (parent && parent.nodeName === 'UL') {
+                     text = "– " + text;
+                 } else if (parent && parent.nodeName === 'OL') {
+                     const index = Array.from(parent.children).indexOf(node) + 1;
+                     text = index + ". " + text;
+                 }
+              }
+
+              // Исправленная логика текстовых таблиц
               if (text.includes('|') && text.split('|').length > 1) {
-                const cells = text.split('|').map(c => c.trim());
-                textTableRows.push(cells);
-                continue;
+                let cells = text.split('|').map(c => c.trim());
+                if (cells.length > 0 && cells[0] === '') cells.shift();
+                if (cells.length > 0 && cells[cells.length - 1] === '') cells.pop();
+                
+                if (cells.length > 0) {
+                    textTableRows.push(cells);
+                    continue;
+                }
               } else {
                 flushTextTable(); 
               }
@@ -549,7 +573,6 @@
                   children: [new TextRun({ text: text.replace(/\.+$/, ''), font: 'Times New Roman', size: 28, bold: true, color: '000000' })]
                 }));
               } else if (/^Таблица/i.test(text)) {
-                // Если пользователь сам написал название, обновляем счетчик
                 let match = text.match(/^Таблица\s+(\d+)/i);
                 if (match) {
                   tableCounter = parseInt(match[1], 10) + 1;
@@ -559,7 +582,7 @@
                   alignment: AlignmentType.LEFT,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 240, after: 120 },
-                  children: extractRuns(lineNode, { size: 28 })
+                  children: [new TextRun({ text: text, font: 'Times New Roman', size: 28, color: '000000' })]
                 }));
                 isCaption = true;
               } else if (/^Рисунок\s+\d/i.test(text)) {
@@ -567,25 +590,28 @@
                   alignment: AlignmentType.CENTER,
                   indent: { firstLine: 0 },
                   spacing: { line: 360, before: 120, after: 240 },
-                  children: extractRuns(lineNode, { size: 28 })
+                  children: [new TextRun({ text: text, font: 'Times New Roman', size: 28, color: '000000' })]
                 }));
               } else {
                 const isListHeader = text.endsWith(':') && text.length < 150;
+                
+                // Пересобираем форматирование для узла или берем готовый текст
+                const runsToUse = (node.nodeName === 'LI') 
+                   ? [new TextRun({ text: text, font: 'Times New Roman', size: 28, bold: isListHeader, color: '000000' })]
+                   : extractRuns(lineNode, { size: 28, bold: isListHeader });
+
                 elements.push(new Paragraph({
                   alignment: AlignmentType.JUSTIFIED,
                   indent: { firstLine: convertMillimetersToTwip(12.5) },
                   spacing: { line: 360 },
-                  children: extractRuns(lineNode, { size: 28, bold: isListHeader })
+                  children: runsToUse
                 }));
               }
-
-              // Запоминаем, была ли эта строка подписью таблицы (чтобы не дублировать)
               pendingTableCaption = isCaption;
             }
           } else if (node.nodeName === 'TABLE') {
-            flushTextTable(); // На случай, если перед нормальной таблицей шла текстовая
+            flushTextTable(); 
 
-            // Авто-подпись для обычных таблиц (из Word)
             if (!pendingTableCaption) {
               elements.push(new Paragraph({
                 alignment: AlignmentType.LEFT,
@@ -637,7 +663,7 @@
         }
       }
 
-      flushTextTable(); // Если текстовая таблица была последней строкой в документе
+      flushTextTable(); 
 
       if (elements.length === 0) {
         elements.push(new Paragraph({ children: [new TextRun({ text: 'Текст не найден или не распознан.', font: 'Times New Roman', size: 28 })] }));
@@ -654,11 +680,14 @@
         }
       };
 
+      const footersObj = {};
+      
+      // Исправление логики титульного листа для Microsoft Word
       if (optTitlePage) {
         sectionProperties.titlePage = true;
+        footersObj.first = new Footer({ children: [new Paragraph({ children: [] })] });
       }
 
-      const footersObj = {};
       if (optPageNum) {
         footersObj.default = new Footer({
           children: [
